@@ -18,7 +18,28 @@ const SignUp = () => {
 
   //Sign Up Form
   const handelSignUp = async (e) => {
+    e.preventDefault();
 
+    let profileImageUrl = "";
+
+    if (!fullName) {
+      setError ("Please enter your name");
+      return;
+    }
+
+    if(!validateEmail(email)) {
+      setError("Please enter valid email address.");
+      return;
+    }
+
+    if(!password){
+      setError("Please enter the password");
+      return;
+    }
+
+    setError("");
+
+    //SignUp API Call
   }
 
   return (
@@ -59,6 +80,18 @@ const SignUp = () => {
           />
           </div>
         </div>
+
+
+        {error && <p className='text-red-500 text-xs pb-2.5'>{error}</p>}
+        
+          <button type='submit' className='btn-primary'>
+            SIGN UP
+          </button>
+          <p className='text-[17px] text-slate-800mt-3'>
+            Already have an account?{" "}
+              <Link className='font-medium text-primary   underline' to="/login">Login here
+              </Link>
+          </p>
       </form>
       </div>
     </AuthLayoute>
