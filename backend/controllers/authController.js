@@ -32,6 +32,7 @@ export const registerUser = async (req, res) => {
             _id: user._id,
             fullName: user.fullName,
             email: user.email,
+            profileImageUrl: user.profileImageUrl,
             token: generateToken(user._id),
         });
     } else {
@@ -50,6 +51,7 @@ export const loginUser = async (req, res) => {
             _id: user._id,
             fullName: user.fullName,
             email: user.email,
+            profileImageUrl: user.profileImageUrl,
             token: generateToken(user._id),
         });
     } else {
