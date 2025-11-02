@@ -12,4 +12,7 @@ npm i express jsonwebtoken mongoose dotenv cors bcryptjs multer xlsx
  sudo netstat -tulnp | grep 8000
  sudo docker ps -a
  sudo docker stop 5a66166af452
- 
+
+ yo
+
+ sup
