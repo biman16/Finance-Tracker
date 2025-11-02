@@ -10,6 +10,7 @@ export default {
         sans: ["Poppins", "sans-serif"],
       },
       screens: {
+        "lg": "1080px",
         "3xl": "1920px",
       },
       colors: {

@@ -53,11 +53,11 @@ export const getDashboardData = async (req, res) => {
         const lastTransactions = [
             ...incomeTransactions.map((txn) => ({
                 ...txn.toObject(),
-                type: "Income",
+                type: "income",
             })),
             ...expenseTransactions.map((txn) => ({
                 ...txn.toObject(),
-                type: "Expense",
+                type: "expense",
             })),
         ].sort((a, b) => b.date.getTime() - a.date.getTime()); //Sort latest first by converting dates to timestamps
 

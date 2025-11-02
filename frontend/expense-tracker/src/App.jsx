@@ -39,7 +39,7 @@ const AppContent = () => {
       }
     };
     fetchUserData();
-  }, [updateUser]);
+  }, []);
 
   return (
     <div>
