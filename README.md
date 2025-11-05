@@ -13,6 +13,5 @@ npm i express jsonwebtoken mongoose dotenv cors bcryptjs multer xlsx
  sudo docker ps -a
  sudo docker stop 5a66166af452
 
- yo
 
- sup
+ cd backend && npm install @google/generative-ai dotenv

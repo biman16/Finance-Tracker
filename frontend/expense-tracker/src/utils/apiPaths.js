@@ -22,4 +22,7 @@ export const API_PATHS = {
     DASHBOARD: {
         GET_DASHBOARD_DATA: `${API_BASE_URL}/dashboard`,
     },
+    AI: {
+        GENERATE_RESPONSE: `${API_BASE_URL}/ai/chat`,
+    },
 };
