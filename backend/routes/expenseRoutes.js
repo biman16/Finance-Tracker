@@ -4,7 +4,7 @@ import {
     addExpense,
     getAllExpense,
     deleteExpense,
-    downloadExpenseExcel
+    downloadExpensePDF
 } from "../controllers/expenseController.js";
 
 import { protect } from "../middileware/authMiddleware.js";
@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.post("/add", protect, addExpense);
 router.get("/get", protect, getAllExpense);
-router.get("/downloadexcel", protect, downloadExpenseExcel);
+router.get("/downloadpdf", protect, downloadExpensePDF);
 router.delete("/:id", protect, deleteExpense);
 
 

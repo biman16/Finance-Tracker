@@ -4,7 +4,7 @@ import {
     addIncome,
     getAllIncome,
     deleteIncome,
-    downloadIncomeExcel
+    downloadIncomePDF
 } from "../controllers/incomeController.js";
 
 import { protect } from "../middileware/authMiddleware.js";
@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.post("/add", protect, addIncome);
 router.get("/get", protect, getAllIncome);
-router.get("/downloadexcel", protect, downloadIncomeExcel);
+router.get("/downloadpdf", protect, downloadIncomePDF);
 router.delete("/:id", protect, deleteIncome);
 
 

@@ -98,28 +98,36 @@ const deleteExpense = async (id) => {
 };
 
 
-//hadle download Expense details
+//handle download Expense details as PDF
 const handleDownloadExpenseDetails = async () => {
   try {
+    toast.loading('Generating PDF...');
     const response = await axiosInstance.get(
-      API_PATHS.EXPENSE.DOWNLOAD_EXPENSE_EXCEL,
+      API_PATHS.EXPENSE.DOWNLOAD_EXPENSE_PDF,
       {
         responseType: "blob",
       }
     );
 
-    //create a URL for the blob
-    const url = window.URL.createObjectURL(new Blob([response.data]));
+    // Create a URL for the blob
+    const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
     const link = document.createElement("a");
-    link.href=url;
-    link.setAttribute("downloads", "expense_details.xlsx");
+    link.href = url;
+    link.setAttribute("download", "expense_details.pdf");
+    
+    // Click the link programmatically
     document.body.appendChild(link);
     link.click();
-    link.parentNode.removeChild(link);
+    
+    // Cleanup
+    document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
+    toast.dismiss();
+    toast.success('PDF downloaded successfully!');
   } catch (error) {
     console.error("Error downloading expense details:", error);
-    toast.error("Failed to download expense details. Please try againg letter.")
+    toast.dismiss();
+    toast.error("Failed to download expense details. Please try again later.");
   }
 };
 

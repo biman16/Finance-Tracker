@@ -103,8 +103,38 @@ const deleteIncome = async (id) => {
 };
 
 
-//hadle download income details
-const handleDownloadIncomeDetails = async () => {};
+//handle download income details as PDF
+const handleDownloadIncomeDetails = async () => {
+  try {
+    toast.loading('Generating PDF...');
+    const response = await axiosInstance.get(
+      API_PATHS.INCOME.DOWNLOAD_INCOME_PDF,
+      {
+        responseType: "blob",
+      }
+    );
+
+    // Create a URL for the blob
+    const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "income_details.pdf");
+    
+    // Click the link programmatically
+    document.body.appendChild(link);
+    link.click();
+    
+    // Cleanup
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+    toast.dismiss();
+    toast.success('PDF downloaded successfully!');
+  } catch (error) {
+    console.error("Error downloading income details:", error);
+    toast.dismiss();
+    toast.error("Failed to download income details. Please try again later.");
+  }
+};
 
 
 
@@ -125,7 +155,7 @@ useEffect(() => {
           <div className=''>
             <IncomeOverview
               transactions={incomeData}
-              onAddIncome={()=>setOpenAddIncomeModel(true)}
+              onAddIncome={()=>setopenAddIncomeModel(true)}
               />
           </div>
 
