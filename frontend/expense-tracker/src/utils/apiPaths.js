@@ -1,4 +1,4 @@
-export const API_BASE_URL = "http://localhost:8001/api/v1";
+export const API_BASE_URL = "https://etracker-backend-biman.onrender.com/api/v1";
 
 export const API_PATHS = {
     AUTH: {
