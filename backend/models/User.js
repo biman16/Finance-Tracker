@@ -18,6 +18,18 @@ const UserSchema = mongoose.Schema({
     profileImageUrl: {
         type: String,
         default: null
+    },
+    currency: {
+        code: {
+            type: String,
+            required: true,
+            default: 'USD'
+        },
+        symbol: {
+            type: String,
+            required: true,
+            default: '$'
+        }
     }
     }, { timestamps: true }
 );

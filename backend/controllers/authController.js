@@ -8,7 +8,7 @@ const generateToken = (id) => {
 
 //Register User
 export const registerUser = async (req, res) => {
-    const { fullName, email, password, profileImageUrl } = req.body || {}; // Provide a default empty object if req.body is undefined
+    const { fullName, email, password, profileImageUrl, currency } = req.body || {}; // Provide a default empty object if req.body is undefined
 
     if (!fullName || !email || !password) {
         return res.status(400).json({ message: "Please enter all fields" }); // Added return to prevent further execution
@@ -25,6 +25,7 @@ export const registerUser = async (req, res) => {
         email,
         password,
         profileImageUrl,
+        currency: currency || { code: 'USD', symbol: '$' },
     });
 
     if (user) {
@@ -52,6 +53,7 @@ export const loginUser = async (req, res) => {
             fullName: user.fullName,
             email: user.email,
             profileImageUrl: user.profileImageUrl,
+            currency: user.currency,
             token: generateToken(user._id),
         });
     } else {
@@ -73,6 +75,7 @@ export const getUserInfo = async (req, res) => {
             fullName: user.fullName,
             email: user.email,
             profileImageUrl: user.profileImageUrl,
+            currency: user.currency,
         });
     } catch (error) {
         res.status(500).json({ message: "Error getting user info", error: error.message });

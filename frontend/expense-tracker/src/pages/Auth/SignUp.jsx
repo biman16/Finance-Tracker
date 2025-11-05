@@ -9,6 +9,8 @@ import axiosInstance from '../../utils/axiosInstance';
 import { API_PATHS } from '../../utils/apiPaths';
 import { UserContext } from '../../context/UserContext';
 import uploadImage from '../../utils/uploadImage';
+import CurrencySelector from '../../components/Inputs/CurrencySelector';
+import { currencies } from '../../utils/currencies';
 
 const SignUp = () => {
 
@@ -16,6 +18,7 @@ const SignUp = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [selectedCurrency, setSelectedCurrency] = useState(currencies[0]);
 
   const [error, setError] = useState(null);
 
@@ -60,6 +63,10 @@ const SignUp = () => {
         email,
         password,
         profileImageUrl,
+        currency: {
+          code: selectedCurrency.code,
+          symbol: selectedCurrency.symbol
+        },
       });
 
       const { token, user } = response.data;
@@ -108,13 +115,20 @@ const SignUp = () => {
           />
 
           <div className='col-span-2'>
-          <Input
-          value={password}
-          onChange={({ target }) => setPassword(target.value)}
-          lable="Enter Password"
-          placeholder="minimum 8 character"
-          type="password"
-          />
+            <Input
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
+              lable="Enter Password"
+              placeholder="minimum 8 character"
+              type="password"
+            />
+          </div>
+          
+          <div className='col-span-2'>
+            <CurrencySelector
+              selectedCurrency={selectedCurrency.code}
+              onChange={(currency) => setSelectedCurrency(currency)}
+            />
           </div>
         </div>
 

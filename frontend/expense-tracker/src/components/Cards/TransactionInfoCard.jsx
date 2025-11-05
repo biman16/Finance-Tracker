@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
     LuUtensils,
     LuTrendingUp,
     LuTrendingDown,
     LuTrash2,
 } from "react-icons/lu";
+import { UserContext } from '../../context/UserContext';
+import { formatAmount } from '../../utils/formatCurrency';
 
 const TransactionInfoCard = ({
     title,
@@ -15,6 +17,7 @@ const TransactionInfoCard = ({
     hideDeleteBtn,
     onDelete,
 }) => {
+    const { user } = useContext(UserContext);
   return (
     <div className='group relative flex items-center gap-4 mt-2 p-3 rounded-lg hover:bg-gray-100/60'>
         <div className='w-12 h-12 flex items-center justify-center text-xl text-gray-800 bg-gray-100 rounded-full'>
@@ -42,7 +45,7 @@ const TransactionInfoCard = ({
                 <div 
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-md ${type === "income" ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"}`} >
                     <h6 className='text-xs font-medium'>
-                        {type === "income" ? "+" : "-"} ${amount}
+                        {type === "income" ? "+" : "-"} {formatAmount(amount, user?.currency)}
                     </h6>
                     {type === "income" ? <LuTrendingUp /> : <LuTrendingDown />}
                 </div>

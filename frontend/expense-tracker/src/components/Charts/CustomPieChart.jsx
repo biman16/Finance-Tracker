@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
     PieChart,
     Pie,
@@ -9,6 +9,8 @@ import {
 } from "recharts";
 import CustomTooltip from './CustomTooltip';
 import CustomLegend from './CustomLegend';
+import { UserContext } from '../../context/UserContext';
+import { formatAmount } from '../../utils/formatCurrency';
 
 const CustomPieChart = ({
     data,
@@ -17,6 +19,7 @@ const CustomPieChart = ({
     colors,
     showTextAnchor
 }) => {
+  const { user } = useContext(UserContext);
   return (
     <ResponsiveContainer width="100%" height={380}>
         <PieChart>
@@ -59,7 +62,7 @@ const CustomPieChart = ({
                     fontSize="24px"
                     fontWeight="semi-bold"
                   >
-                    {totalAmount}
+                    {formatAmount(totalAmount, user?.currency)}
                   </text>
                     
                     </>

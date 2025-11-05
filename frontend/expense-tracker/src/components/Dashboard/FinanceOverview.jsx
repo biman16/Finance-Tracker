@@ -18,11 +18,12 @@ const FinanceOverview = ( { totalBalance, totalIncome, totalExpense }) => {
 
 
         <CustomPieChart
-        data={balanceData}
-        label="Total Balance"
-        totalAmount={`$${totalBalance}`}
-        colors={COLORS}
-        showTextAnchor
+          data={balanceData}
+          label="Total Balance"
+          // pass raw numeric total so CustomPieChart can format using user's currency
+          totalAmount={totalBalance}
+          colors={COLORS}
+          showTextAnchor
         />
     </div>
   )

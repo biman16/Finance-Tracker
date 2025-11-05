@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { UserContext } from '../../context/UserContext';
+import { formatAmount } from '../../utils/formatCurrency';
 
 export const CustomTooltip = ({ active, payload }) => {
+    const { user } = useContext(UserContext);
+
     if (active && payload && payload.length) {
+        const amt = payload[0].payload?.amount !== undefined ? payload[0].payload.amount : payload[0].value;
         return (
             <div className='bg-white shadow-md rounded-lg p-2 border border-gray-300'>
                 <p className='text-xs font-semibold text-purple-800 mb-1'>{payload[0].payload?.category || payload[0].name}</p>
                 <p className='text-sm text-gray-600'>
                     Amount: <span className='text-sm font-medium text-gray-900'>
-                        {payload[0].payload?.amount !== undefined ? payload[0].payload.amount : payload[0].value}
+                        {formatAmount(amt, user?.currency)}
                     </span>
                 </p>
             </div>

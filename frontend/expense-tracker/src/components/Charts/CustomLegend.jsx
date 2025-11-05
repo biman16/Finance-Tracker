@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { UserContext } from '../../context/UserContext';
+import { formatAmount } from '../../utils/formatCurrency';
 
 export const CustomLegend = ({payload}) => {
+  const { user } = useContext(UserContext);
   return (
     <div className='flex flex-wrap justify-center gap-2 mt-4 space-x-6'>
         {payload.map((entry, index) => (
@@ -10,7 +13,7 @@ export const CustomLegend = ({payload}) => {
                     style={{ backgroundColor: entry.color }}
                     ></div>
                     <span className='text-gray-700 font-medium'>
-                        {entry.value}
+                        {typeof entry.value === 'number' ? formatAmount(entry.value, user?.currency) : entry.value}
                     </span>
             </div>
         ))}

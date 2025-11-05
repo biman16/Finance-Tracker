@@ -1,5 +1,6 @@
 import PDFDocument from 'pdfkit';
 import Expense from "../models/Expense.js";
+import User from "../models/User.js";
 
 
 
@@ -63,6 +64,7 @@ export const downloadExpensePDF = async (req, res) => {
 
     try {
         const expenses = await Expense.find({ userId }).sort({ date: -1 });
+        const user = await User.findById(userId);
 
         // Create PDF document
         const doc = new PDFDocument();
@@ -97,7 +99,15 @@ export const downloadExpensePDF = async (req, res) => {
         doc.moveDown();
 
         // Add expenses data
+        doc.moveDown();
+        doc.fontSize(12).text(`Currency: ${user.currency.code}`, { align: 'left' });
+        doc.moveDown();
+
         expenses.forEach((expense) => {
+            const amount = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: user.currency.code
+            }).format(expense.amount);
             y = doc.y;
             doc.fontSize(10)
                .text(expense.category || '', 50, y)
