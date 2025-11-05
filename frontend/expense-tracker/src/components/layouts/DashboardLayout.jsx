@@ -12,17 +12,17 @@ export const DashboardLayout = ({ children, activeMenu }) => {
     };
 
   return (
-    <div className=''>
+    <div className='min-h-screen max-h-screen overflow-hidden'>
         <Navbar activeMenu={activeMenu} toggleSideMenu={toggleSideMenu} isSideMenuOpen={isSideMenuOpen} />
 
         {user && (
-            <div className='flex'>
+            <div className='flex h-[calc(100vh-64px)]'> 
                 <div className={`fixed inset-y-0 left-0 transform ${isSideMenuOpen ? 'translate-x-0' : '-translate-x-full'} lg:relative lg:translate-x-0 transition-transform duration-200 ease-in-out z-30`}>
                     <SideMenu activeMenu={activeMenu} />
                 </div>
 
 
-                <div className='grow mx-5'>{children}</div>
+                <div className='grow mx-5 overflow-y-auto'>{children}</div>
             </div>
         )}
     </div>

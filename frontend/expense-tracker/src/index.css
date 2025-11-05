@@ -7,7 +7,10 @@
     @apply font-sans;
   }
   body {
-    background-color: #fcfbfc;
+    background-image: url('./assets/images/bg-main.svg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
     overflow-x: hidden;
   }
 }
@@ -20,9 +23,15 @@
   @apply w-full font-bold text-white bg-violet-500 shadow-lg shadow-purple-600/5 p-[10px] rounded-md my-1 hover:bg-purple-600/15 hover:text-purple-600 cursor-pointer
 }
 
-.card {
+/* .card {
   @apply bg-white p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50;
+} */
+
+.card {
+  @apply bg-white p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50
+         transform transition-transform duration-300 hover:scale-102 hover:shadow-xl;
 }
+
 
 .card-btn {
   @apply flex items-center gap-3 font-medium text-gray-700 hover:text-purple-500 bg-gray-50 hover:bg-purple-50 px-4 py-1.5 rounded-lg border-gray-200/50 cursor-pointer;

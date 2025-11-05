@@ -14,6 +14,7 @@ import UserProvider, { UserContext } from './context/UserContext';
 import axiosInstance from './utils/axiosInstance';
 import { API_PATHS } from './utils/apiPaths';
 import { Toaster } from "react-hot-toast";
+import Ai from './pages/Dashboard/Ai';
 
 const App = () => {
   return (
@@ -52,6 +53,7 @@ const AppContent = () => {
           <Route path="/dashboard" exact element={<Home />} />
           <Route path="/income" exact element={<Income />} />
           <Route path="/expense" exact element={<Expense />} />
+          <Route path="/ai" exact element={<Ai />} />
         </Routes>
       </Router>
 

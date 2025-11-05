@@ -25,7 +25,7 @@ const ExpenseList = ({ transactions, onDelete, onDownload}) => {
                     type="expense"
                     onDelete={() => onDelete(expense._id)}
                 />
-            ))};
+            ))}
         </div>
     </div>
   )

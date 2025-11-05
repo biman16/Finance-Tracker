@@ -7,7 +7,7 @@ const AuthLayoute = ({children}) => {
     <div className='flex'>
         <div className="w-screen h-screen md:w-[60vw] px-12 pt-8 pb-12 ">
             <h1 className="text-5xl font-bold font-medium text-black">Expenzo</h1>
-            <h6 className='font-medium text-slate-500'>Because every rupee counts.</h6>
+            <h6 className='font-medium text-slate-500'>Maximize Your Money</h6>
             {children}
         </div>
 

@@ -56,7 +56,6 @@ useEffect(() => {
           <InfoCard
             icon={<IoMdCard />}
             label="Total Balance"
-            // pass raw number; InfoCard will format using user's currency
             value={dashboardData?.totalBalance || 0}
             color="bg-blue-500"
           />
