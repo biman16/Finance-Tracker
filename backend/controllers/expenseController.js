@@ -1,4 +1,4 @@
-import xlsx from "xlsx";
+import PDFDocument from 'pdfkit';
 import Expense from "../models/Expense.js";
 
 
@@ -57,26 +57,65 @@ export const deleteExpense = async (req, res) => {
     }
 };
 
-//Download in Excel
-export const downloadExpenseExcel = async (req, res) => {
+//Download in PDF
+export const downloadExpensePDF = async (req, res) => {
     const userId = req.user.id;
 
     try {
-        const expense = await Expense.find({ userId }).sort({ date: -1 });
+        const expenses = await Expense.find({ userId }).sort({ date: -1 });
 
-        //Prepare data for Excel
-        const data = expense.map((item) => ({
-            Source: item.source,
-            Amount: item.amount,
-            Date: item.date,
-        }));
+        // Create PDF document
+        const doc = new PDFDocument();
+        
+        // Set response headers
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename=expense_details.pdf');
+        
+        // Pipe the PDF to the response
+        doc.pipe(res);
 
-        const wb = xlsx.utils.book_new();
-        const ws = xlsx.utils.json_to_sheet(data);
-        xlsx.utils.book_append_sheet(wb, ws, "Expense");
-        xlsx.writeFile(wb, 'expense_details.xlsx');
-        res.download('expense_details.xlsx')
+        // Add title
+        doc.fontSize(20).text('Expense Report', { align: 'center' });
+        doc.moveDown();
+
+        // Add current date
+        doc.fontSize(12).text(`Generated on: ${new Date().toLocaleDateString()}`, { align: 'right' });
+        doc.moveDown();
+
+        // Add table headers
+        doc.fontSize(14).text('Expense Details:', { underline: true });
+        doc.moveDown();
+
+        // Table headers
+        const headers = ['Category', 'Amount', 'Date'];
+        let y = doc.y;
+        doc.fontSize(12)
+           .text(headers[0], 50, y)
+           .text(headers[1], 250, y)
+           .text(headers[2], 400, y);
+
+        doc.moveDown();
+
+        // Add expenses data
+        expenses.forEach((expense) => {
+            y = doc.y;
+            doc.fontSize(10)
+               .text(expense.category || '', 50, y)
+               .text(`$${expense.amount.toFixed(2)}`, 250, y)
+               .text(new Date(expense.date).toLocaleDateString(), 400, y);
+            doc.moveDown();
+        });
+
+        // Add total
+        doc.moveDown();
+        const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+        doc.fontSize(12)
+           .text(`Total Expenses: $${total.toFixed(2)}`, { align: 'right' });
+
+        // Finalize the PDF
+        doc.end();
     } catch (error) {
-        res.status(500).json({ message: "Server Error while Downloading"});
+        console.error('PDF Generation Error:', error);
+        res.status(500).json({ message: "Server Error while generating PDF" });
     }
 };

@@ -13,6 +13,7 @@ import Expense from './pages/Dashboard/Expense';
 import UserProvider, { UserContext } from './context/UserContext';
 import axiosInstance from './utils/axiosInstance';
 import { API_PATHS } from './utils/apiPaths';
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
@@ -53,7 +54,20 @@ const AppContent = () => {
           <Route path="/expense" exact element={<Expense />} />
         </Routes>
       </Router>
+
+
+      <Toaster
+        toastOptions={{
+        className: "",
+        style: {
+          fontSize: '13px'
+        },
+      }}
+    />
     </div>
+
+
+    
   );
 };
 

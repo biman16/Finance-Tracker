@@ -3,6 +3,7 @@ import { SIDE_MENU_DATA } from "../../utils/data"
 import { UserContext } from '../../context/UserContext'
 import { useNavigate } from 'react-router-dom';
 import CharAvatar from '../Cards/CharAvatar';
+import { API_BASE_URL } from '../../utils/apiPaths';
 
 const SideMenu = ({ activeMenu }) => {
   const { user, clearUser } = useContext(UserContext);
@@ -25,13 +26,29 @@ const SideMenu = ({ activeMenu }) => {
   };
 
 
+  // Normalize profile image URL so it always points to the current backend uploads path
+  const getProfileImageSrc = () => {
+    if (!user?.profileImageUrl) return "";
+
+    try {
+      // If the stored URL already contains '/uploads/', extract the filename
+      const parts = user.profileImageUrl.split("/");
+      const filename = parts[parts.length - 1];
+      // Build URL from current API base (remove /api/v1)
+      const base = API_BASE_URL.replace('/api/v1', '');
+      return `${base}/uploads/${filename}`;
+    } catch (err) {
+      return user.profileImageUrl;
+    }
+  };
+
   return <div className='w-64 h-[calc(100vh-61px)] bg-white border-r border-gray-200/50 p-5 sticky top-[61px] z-20'>
     <div className='flex flex-col items-center justify-center gap-3 mt-3 mb-7'>
       {user?.profileImageUrl ? (
         <img
-        src={user?.profileImageUrl || ""}
-        alt="Profile Imagae"
-        className='w-20 h-20 bg-salte-400 rounded-full'
+        src={getProfileImageSrc() || ""}
+        alt="Profile Image"
+        className='w-20 h-20 bg-slate-400 rounded-full'
         /> ) : (<CharAvatar
         fullName={user?.fullName}
         width="w-20"
